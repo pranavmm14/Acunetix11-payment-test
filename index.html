@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPI payment test
-    </title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UPI payment test</title>
+  </head>
+  <body>
     <h1>This is only for testing</h1>
-    <br><br><br>
-    <a href="upi://pay/?cu=INR&pa=pranavmehe14@okicici&pn=Pranav&tn=Test%20Event%20Payment&am=100.00"><h3>Pay Here</h3></a>
+    <br /><br />
 
-    <br><br>
-    <p>ok</p>
-    
-</body>
+    <label for="amount">Enter amount:</label>
+    <input type="number" id="amount" step="10" min="100" required />
+
+    <br /><br />
+
+    <button id="setBtn">Set</button>
+    <br /><br />
+    <a
+      id="payment-link"
+      href="upi://pay/?cu=INR&pa=pranavmehe14@okicici&pn=Pranav&tn=Test%20Event%20Payment&am=100.00"
+      >Pay Here</a
+    >
+
+    <br /><br />
+
+    <p id="status">ok</p>
+
+    <script>
+      const inputField = document.getElementById("amount");
+      const paymentLink = document.getElementById("payment-link");
+      const statusP = document.getElementById("status");
+      const setBtn = document.getElementById("setBtn");
+
+      setBtn.addEventListener("click", () => {
+        var amount = inputField.value;
+        // Use a regular expression to match the entire amount pattern
+        if (amount >= 100) {
+          var newUrl = paymentLink.href.replace(
+            /am=\d+(?:\.\d+)?/,
+            `am=${amount}.00`
+          );
+          statusP.textContent = `Amount updated to: ${amount}.00`;
+        }
+        else{
+            newUrl = paymentLink.href
+        }
+        paymentLink.href = newUrl;
+      });
+    </script>
+  </body>
 </html>
